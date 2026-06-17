@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, User, FileText, CheckCircle2, ChevronRight, ChevronLeft, CalendarClock, Compass } from 'lucide-react';
+import { Calendar, User, CheckCircle2, ChevronRight, ChevronLeft, CalendarClock, Compass } from './Icons';
 
 const treatmentOptions = [
   { id: 'implant', label: 'Implant & Bone Grafting (GBR)' },

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight, Activity, Smile, ArrowRight, Lightbulb } from 'lucide-react';
+import { ChevronRight, Activity, Smile, ArrowRight, Lightbulb } from './Icons';
 
 const symptomsData = [
   {

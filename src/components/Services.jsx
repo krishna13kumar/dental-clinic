@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Heart, Sparkles, Smile, ShieldCheck, Clock, Zap, X, ChevronRight 
-} from 'lucide-react';
+} from './Icons';
 
 const servicesData = [
   {

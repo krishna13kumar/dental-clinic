@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Award, Compass, ShieldAlert, HeartHandshake } from 'lucide-react';
+import { Award, Compass, ShieldAlert, HeartHandshake } from './Icons';
 
 export default function About() {
   const highlights = [

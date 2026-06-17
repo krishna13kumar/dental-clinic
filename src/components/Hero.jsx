@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, Sparkles, ArrowRight, Heart } from 'lucide-react';
+import { Shield, Sparkles, ArrowRight, Heart } from './Icons';
 import { motion } from 'framer-motion';
 
 export default function Hero({ onBookClick, onExploreClick }) {

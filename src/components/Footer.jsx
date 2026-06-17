@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Phone, Mail, Clock, ExternalLink } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, ExternalLink } from './Icons';
 
 export default function Footer() {
   const mapsLink = "https://www.google.com/maps/place/GBR+Dental+Care/@12.8957762,80.1777069,17z/data=!3m1!4b1!4m6!3m5!1s0x3a5261dc2c46fed7:0xa345fb01ebe0ad15!8m2!3d12.895771!4d80.1825778!16s%2Fg%2F11w26cc3_l?entry=ttu&g_ep=EgoyMDI2MDYxMy4wIKXMDSoASAFQAw%3D%3D";

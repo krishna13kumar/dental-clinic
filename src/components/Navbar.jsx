@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Sun, Moon, PhoneCall } from 'lucide-react';
+import { Menu, X, Sun, Moon, PhoneCall } from './Icons';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar({ activeSection, setActiveSection, darkMode, setDarkMode }) {
