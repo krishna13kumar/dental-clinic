@@ -52,7 +52,7 @@ export default function About() {
             }} />
             <img
               src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=800&q=80"
-              alt="Dr. Yuvaraja and Dr. Priyadarshini's Modern Clinic"
+              alt="Dr. Yuvaraja and Dr. Uvashri's Modern Clinic"
               style={{
                 width: '100%',
                 maxHeight: '520px',
@@ -126,7 +126,7 @@ export default function About() {
             Our Lead Specialists
           </h2>
           <p style={{ fontSize: '1rem', color: 'var(--color-text-muted)' }}>
-            Husband and wife in real life, Dr. Yuvaraja and Dr. Priyadarshini co-founded GBR Dental Care to bring cohesive, family-oriented dentistry to Chennai.
+            Husband and wife in real life, Dr. Yuvaraja and Dr. Uvashri co-founded GBR Dental Care to bring cohesive, family-oriented dentistry to Chennai.
           </p>
         </div>
 
@@ -173,7 +173,7 @@ export default function About() {
             </p>
           </motion.div>
 
-          {/* Dr. Priyadarshini */}
+          {/* Dr. Uvashri */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -193,8 +193,8 @@ export default function About() {
             className="doctor-card"
           >
             <img 
-              src="https://images.unsplash.com/photo-1594824813573-246434de83fb?auto=format&fit=crop&w=400&q=80" 
-              alt="Dr. Priyadarshini - Orthodontist" 
+              src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=400&q=80" 
+              alt="Dr. Uvashri - Orthodontist" 
               style={{
                 width: '160px',
                 height: '160px',
@@ -205,12 +205,12 @@ export default function About() {
                 boxShadow: 'var(--shadow-sm)'
               }}
             />
-            <h3 style={{ fontSize: '1.25rem', color: 'var(--color-text-primary)', marginBottom: '4px' }}>Dr. Priyadarshini, MDS</h3>
+            <h3 style={{ fontSize: '1.25rem', color: 'var(--color-text-primary)', marginBottom: '4px' }}>Dr. Uvashri, MDS</h3>
             <span style={{ fontSize: '0.85rem', color: 'var(--color-accent)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '16px' }}>
               Orthodontist & Pediatric Specialist
             </span>
             <p style={{ fontSize: '0.9rem', lineHeight: '1.6', color: 'var(--color-text-muted)', margin: 0 }}>
-              Specializing in transparent aligners, cosmetic braces, and comforting pediatric dental care. Dr. Priyadarshini loves helping children and adults build aligned, confident smiles in a gentle, playful environment.
+              Specializing in transparent aligners, cosmetic braces, and comforting pediatric dental care. Dr. Uvashri loves helping children and adults build aligned, confident smiles in a gentle, playful environment.
             </p>
           </motion.div>
         </div>
@@ -234,7 +234,7 @@ export default function About() {
             A Family Dedicated to Your Family's Smile
           </h4>
           <p style={{ fontSize: '0.9rem', color: 'var(--color-text-on-soft)', margin: 0, lineHeight: '1.6' }}>
-            As husband and wife, Dr. Yuvaraja and Dr. Priyadarshini combine their medical specialties to offer complete, cohesive dental services. Their close partnership ensures a seamless handoff between children's care, alignment therapy, and implant reconstructions, all with a shared commitment to warmth and empathy.
+            As husband and wife, Dr. Yuvaraja and Dr. Uvashri combine their medical specialties to offer complete, cohesive dental services. Their close partnership ensures a seamless handoff between children's care, alignment therapy, and implant reconstructions, all with a shared commitment to warmth and empathy.
           </p>
         </motion.div>
       </div>

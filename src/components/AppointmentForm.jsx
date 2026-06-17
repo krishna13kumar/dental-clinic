@@ -20,12 +20,87 @@ const timeSlots = [
   { id: 'e2', label: '7:30 PM - 8:30 PM', period: 'Evening' }
 ];
 
+const getTodayLocalDateString = (dateObj = new Date()) => {
+  const year = dateObj.getFullYear();
+  const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const day = String(dateObj.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
+const getNextWorkingSlot = () => {
+  const dateObj = new Date();
+  let dayOfWeek = dateObj.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+  let hours = dateObj.getHours();
+  let minutes = dateObj.getMinutes();
+  let timeInMinutes = hours * 60 + minutes;
+
+  // Helper to format date
+  const formatDate = (d) => getTodayLocalDateString(d);
+
+  // If Sunday: skip to Monday morning slot
+  if (dayOfWeek === 0) {
+    const monday = new Date(dateObj);
+    monday.setDate(dateObj.getDate() + 1);
+    return {
+      date: formatDate(monday),
+      timeSlot: 'm1'
+    };
+  }
+
+  // If Saturday and past the last evening slot start time (7:30 PM = 19:30):
+  // skip to Monday morning
+  if (dayOfWeek === 6 && timeInMinutes >= 19 * 60 + 30) {
+    const monday = new Date(dateObj);
+    monday.setDate(dateObj.getDate() + 2);
+    return {
+      date: formatDate(monday),
+      timeSlot: 'm1'
+    };
+  }
+
+  // If weekday and past the last evening slot start time: skip to tomorrow morning
+  if (timeInMinutes >= 19 * 60 + 30) {
+    const tomorrow = new Date(dateObj);
+    tomorrow.setDate(dateObj.getDate() + 1);
+    // If tomorrow is Sunday, skip to Monday
+    if (tomorrow.getDay() === 0) {
+      tomorrow.setDate(tomorrow.getDate() + 1);
+    }
+    return {
+      date: formatDate(tomorrow),
+      timeSlot: 'm1'
+    };
+  }
+
+  // Otherwise, default to today
+  let slot = 'm1';
+  if (timeInMinutes < 9 * 60 + 30) {
+    slot = 'm1';
+  } else if (timeInMinutes < 11 * 60) {
+    slot = 'm2';
+  } else if (timeInMinutes < 14 * 60 + 30) {
+    slot = 'a1';
+  } else if (timeInMinutes < 16 * 60) {
+    slot = 'a2';
+  } else if (timeInMinutes < 18 * 60) {
+    slot = 'e1';
+  } else {
+    slot = 'e2';
+  }
+
+  return {
+    date: formatDate(dateObj),
+    timeSlot: slot
+  };
+};
+
 export default function AppointmentForm() {
   const [step, setStep] = useState(1);
+  const defaultSlot = getNextWorkingSlot();
   const [formData, setFormData] = useState({
     treatment: '',
-    date: '',
-    timeSlot: '',
+    date: defaultSlot.date,
+    timeSlot: defaultSlot.timeSlot,
     name: '',
     phone: '',
     email: '',
@@ -189,10 +264,11 @@ export default function AppointmentForm() {
                     onClick={() => {
                       setSubmitted(false);
                       setStep(1);
+                      const nextSlot = getNextWorkingSlot();
                       setFormData({
                         treatment: '',
-                        date: '',
-                        timeSlot: '',
+                        date: nextSlot.date,
+                        timeSlot: nextSlot.timeSlot,
                         name: '',
                         phone: '',
                         email: '',
@@ -275,7 +351,7 @@ export default function AppointmentForm() {
                           <input
                             type="date"
                             value={formData.date}
-                            min={new Date().toISOString().split('T')[0]}
+                            min={getTodayLocalDateString()}
                             onChange={(e) => updateField('date', e.target.value)}
                             style={{
                               width: '100%',
@@ -441,7 +517,7 @@ export default function AppointmentForm() {
                   )}
 
                   {/* Wizard Footer Controls */}
-                  <div style={{
+                  <div className="wizard-footer" style={{
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
@@ -469,7 +545,7 @@ export default function AppointmentForm() {
                         Back
                       </button>
                     ) : (
-                      <div />
+                      <div className="wizard-footer-placeholder" />
                     )}
 
                     {step < 3 ? (
@@ -532,6 +608,22 @@ export default function AppointmentForm() {
             grid-template-columns: 1fr;
           }
           .progress-step-text {
+            display: none !important;
+          }
+          .wizard-footer {
+            flex-direction: column-reverse;
+            gap: 12px;
+            align-items: stretch !important;
+          }
+          .wizard-footer button {
+            width: 100%;
+            justify-content: center;
+            text-align: center;
+            display: flex !important;
+            padding: 14px 20px !important;
+            font-size: 1rem !important;
+          }
+          .wizard-footer-placeholder {
             display: none !important;
           }
         }

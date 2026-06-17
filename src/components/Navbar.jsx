@@ -5,6 +5,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function Navbar({ activeSection, setActiveSection, darkMode, setDarkMode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile width for non-sticky absolute positioning
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,7 +39,7 @@ export default function Navbar({ activeSection, setActiveSection, darkMode, setD
     // Smooth scroll to the section
     const element = document.getElementById(id);
     if (element) {
-      const offset = 96; // Shifted slightly down to account for floating capsule layout
+      const offset = isMobile ? 24 : 96; // Less offset on mobile since nav scrolls away
       const bodyRect = document.body.getBoundingClientRect().top;
       const elementRect = element.getBoundingClientRect().top;
       const elementPosition = elementRect - bodyRect;
@@ -45,17 +56,17 @@ export default function Navbar({ activeSection, setActiveSection, darkMode, setD
     <nav
       className="glass"
       style={{
-        position: 'fixed',
+        position: isMobile ? 'absolute' : 'fixed',
         zIndex: 50,
-        top: scrolled ? '12px' : '20px',
+        top: isMobile ? '20px' : scrolled ? '12px' : '20px',
         left: '50%',
         transform: 'translateX(-50%)',
         width: 'calc(100% - 32px)', // 16px margin on each side
         maxWidth: '1200px',
         borderRadius: 'var(--border-radius-full)',
-        padding: scrolled ? '10px 0' : '16px 0',
-        boxShadow: scrolled ? 'var(--shadow-md)' : 'var(--shadow-sm)',
-        transition: 'top 0.4s cubic-bezier(0.25, 1, 0.5, 1), padding 0.4s cubic-bezier(0.25, 1, 0.5, 1), background 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease'
+        padding: isMobile ? '14px 0' : scrolled ? '10px 0' : '16px 0',
+        boxShadow: isMobile ? 'var(--shadow-sm)' : scrolled ? 'var(--shadow-md)' : 'var(--shadow-sm)',
+        transition: 'top 0.4s cubic-bezier(0.25, 1, 0.5, 1), padding 0.4s cubic-bezier(0.25, 1, 0.5, 1), background 0.4s ease, box-shadow 0.4s ease'
       }}
     >
       <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
@@ -65,8 +76,8 @@ export default function Navbar({ activeSection, setActiveSection, darkMode, setD
           style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
         >
           <div style={{
-            width: '40px',
-            height: '40px',
+            width: '38px',
+            height: '38px',
             borderRadius: '50%',
             background: 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)',
             display: 'flex',
@@ -74,12 +85,12 @@ export default function Navbar({ activeSection, setActiveSection, darkMode, setD
             justifyContent: 'center',
             boxShadow: 'var(--shadow-sm)'
           }}>
-            <span style={{ color: '#fff', fontFamily: 'var(--font-headings)', fontWeight: 'bold', fontSize: '1.25rem' }}>G</span>
+            <span style={{ color: '#fff', fontFamily: 'var(--font-headings)', fontWeight: 'bold', fontSize: '1.15rem' }}>G</span>
           </div>
           <span style={{ 
             fontFamily: 'var(--font-headings)', 
             fontWeight: 700, 
-            fontSize: '1.4rem', 
+            fontSize: 'clamp(1.15rem, 4.5vw, 1.35rem)', 
             color: 'var(--color-text-primary)',
             letterSpacing: '-0.02em',
             transition: 'color 0.4s ease'
@@ -162,27 +173,8 @@ export default function Navbar({ activeSection, setActiveSection, darkMode, setD
           </div>
         </div>
 
-        {/* Mobile Menu Buttons */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }} className="mobile-menu-buttons">
-          <button
-            onClick={() => setDarkMode(!darkMode)}
-            style={{
-              background: 'var(--color-primary-soft)',
-              color: 'var(--color-text-primary)',
-              width: '36px',
-              height: '36px',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-            }}
-            aria-label="Toggle Theme"
-            className="theme-toggle-mobile"
-          >
-            {darkMode ? <Sun size={16} /> : <Moon size={16} />}
-          </button>
-          
+        {/* Mobile Hamburger Button */}
+        <div style={{ display: 'flex', alignItems: 'center' }} className="mobile-menu-buttons">
           <button
             onClick={() => setIsOpen(!isOpen)}
             style={{
@@ -242,7 +234,31 @@ export default function Navbar({ activeSection, setActiveSection, darkMode, setD
                     </button>
                   </li>
                 ))}
-                <li style={{ paddingTop: '12px', borderTop: '1px solid var(--color-border)' }}>
+                
+                {/* Theme Selector inside Mobile Menu */}
+                <li style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '16px', borderTop: '1px solid var(--color-border)' }}>
+                  <span style={{ fontFamily: 'var(--font-headings)', fontWeight: 600, color: 'var(--color-text-muted)', fontSize: '0.95rem' }}>Appearance</span>
+                  <button
+                    onClick={() => setDarkMode(!darkMode)}
+                    style={{
+                      background: 'var(--color-primary-soft)',
+                      color: 'var(--color-text-primary)',
+                      padding: '8px 16px',
+                      borderRadius: 'var(--border-radius-full)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      cursor: 'pointer',
+                      fontWeight: 600,
+                      fontSize: '0.85rem'
+                    }}
+                  >
+                    {darkMode ? <Sun size={14} /> : <Moon size={14} />}
+                    {darkMode ? 'Light Mode' : 'Dark Mode'}
+                  </button>
+                </li>
+
+                <li style={{ paddingTop: '8px' }}>
                   <button
                     onClick={() => handleNavClick('appointment')}
                     className="btn btn-primary"
